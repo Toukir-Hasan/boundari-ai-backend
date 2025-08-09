@@ -1,0 +1,18 @@
+{
+  "title": "Customer Satisfaction Survey",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "text": "How satisfied are you with our service?",
+      "options": ["Very satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very dissatisfied"]
+    },
+    {
+      "type": "rating",
+      "text": "Rate your overall experience from 1 to 5"
+    },
+    {
+      "type": "open_text",
+      "text": "What can we improve?"
+    }
+  ]
+}
