@@ -11,6 +11,10 @@ from sqlalchemy import select
 import json
 import re
 import pprint
+from app.auth import require_token_or_raise, AuthError
+
+
+
 
 generate_bp = Blueprint("generate", __name__)
 client = OpenAI(api_key=Config.OPENAI_API_KEY)
@@ -23,6 +27,12 @@ def normalize_prompt(s: str) -> str:
 
 @generate_bp.route("/api/surveys/generate", methods=["POST"])
 def generate_survey():
+    # ---- Auth gate ----
+    try:
+        require_token_or_raise()
+    except AuthError as e:
+        return jsonify({"error": "AUTH_ERROR", "message": str(e)}), 401
+    
     # ---------- Input validation ----------
     if not request.is_json:
         return jsonify({"error": "Content-Type must be application/json"}), 400

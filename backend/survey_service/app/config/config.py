@@ -10,5 +10,6 @@ load_dotenv(find_dotenv())
 class Config:
     # API key for OpenAI
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    DATABASE_URL = os.getenv("DATABASE_URL") 
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    SECRET_TOKEN = os.getenv("SECRET_TOKEN") 
 
