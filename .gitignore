@@ -1,1 +1,29 @@
-.idea/
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+*.env
+
+# VSCode
+.vscode/
+
+# Node (if frontend changes later)
+node_modules/
+
+# MacOS
+.DS_Store
+
+# Pytest
+.pytest_cache/
+
+# Logs
+*.log
+
