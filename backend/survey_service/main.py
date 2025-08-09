@@ -7,9 +7,15 @@ from app.routes.generate import generate_bp
 
 def key_by_token_or_ip():
     """
-    Identify the caller for rate limiting.
-    Prefer the bearer token so each client gets its own bucket,
-    otherwise fallback to the remote IP.
+        Build a **rate-limit key** for the current request.
+
+    Priority:
+      1) If the client sends an Authorization header with a Bearer token,
+         use the token value so each client gets an independent bucket.
+      2) Otherwise, fall back to the caller's remote IP address.
+
+    Returns:
+        str: The identifier used by Flask-Limiter to bucket requests.
     """
     auth = request.headers.get("Authorization", "")
     if auth.startswith("Bearer "):
@@ -17,6 +23,23 @@ def key_by_token_or_ip():
     return get_remote_address()
 
 def create_app():
+    
+    """
+   Application factory. Creates and configures a Flask instance.
+
+    What it sets up:
+        - CORS: Allows your local frontend during development.
+        - Rate limiting: 3 requests/minute per token/IP (configurable).
+        - Basic security headers: Sent on every response.
+        - Blueprints: Registers API routes (e.g., /api/surveys/generate).
+
+    Returns:
+        Flask: A configured Flask application. 
+
+   
+    """
+    
+    
     app = Flask(__name__)
     # Allow your local frontend during dev; tighten later
     CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
