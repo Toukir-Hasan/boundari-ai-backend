@@ -70,7 +70,6 @@ backend/
 ## Error Responses
 
 - **400 Bad Request** — Invalid or missing prompt
-```
 
 ## Error Responses
 
