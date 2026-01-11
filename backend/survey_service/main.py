@@ -42,7 +42,7 @@ def create_app():
     
     app = Flask(__name__)
     # Allow your local frontend during dev; tighten later
-    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     # 20 requests per minute per token/IP
     Limiter(
@@ -58,6 +58,11 @@ def create_app():
         resp.headers["X-Content-Type-Options"] = "nosniff"
         resp.headers["Referrer-Policy"] = "no-referrer"
         return resp
+    # Health check endpoint
+    @app.route("/api/health", methods=["GET"])
+    def health_check():
+        return {"status": "healthy", "service": "boundari-backend"}, 200
+
 
     app.register_blueprint(generate_bp)  # your existing routes
     return app
@@ -66,3 +71,4 @@ app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
+
